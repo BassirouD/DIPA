@@ -12,4 +12,10 @@ export class TendanceEvolutionMoisPage implements OnInit {
   ngOnInit() {
   }
 
+    doRefresh(event) {
+        setTimeout(() => {
+            event.target.complete();
+        }, 2000);
+    }
+
 }

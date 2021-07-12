@@ -1,9 +1,78 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>performance-comparee</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true" scrollEvents="true" (ionScroll)="onScroll($event)">
+    <ion-toolbar color="monvert">
+        <ion-back-button slot="start" color="white" defaultHref="/tabs/home"></ion-back-button>
+        <ion-title class="text-white">Performance comparée</ion-title>
+        <ion-buttons slot="end">
+            <ion-button class="text-white">
+                <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <ion-row class="sticky-row">
+        <ion-col size="10">
+            <ion-text class="ion-padding-start" color="medium"
+                      [ngClass]="{'location-visible': showLocationDetail, 'location-hidden': !showLocationDetail}">
+            </ion-text>
+            <ion-searchbar placeholder="Votre recherche ici"></ion-searchbar>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button class="classButom text-white" fill="clear">
+                <ion-icon class="tailleIcon" name="options-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-header>
 
+
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <br>
+
+    <ion-row>
+        <ion-col>
+            <ion-card class="text-center classSelect">
+                <ion-item>
+                    <ion-label>Choisir</ion-label>
+                    <ion-select value="notifications">
+                        <ion-select-option value="1">Assurance</ion-select-option>
+                        <ion-select-option value="2">Bank Ecobank</ion-select-option>
+                        <ion-select-option value="3">Hopital</ion-select-option>
+                        <ion-select-option value="4">Captivation</ion-select-option>
+                        <ion-select-option value="5">I dont know</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="classAlign">
+        <ion-col size="8" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
+            <span>Liste des dossiers</span>
+        </ion-col>
+        <ion-col size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
+            <span>Vue graphique</span>
+        </ion-col>
+    </ion-row>
+
+    <div *ngIf="selecteTextId === 'text1'">
+        <ion-card>
+            <ion-card-header>Je suis le titre</ion-card-header>
+            <ion-card-content>
+                <span>Liste des dossiers</span>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <div *ngIf="selecteTextId === 'text2'">
+        <ion-card>
+            <ion-card-header>Je suis le titre</ion-card-header>
+            <ion-card-content>
+                <span>Ve graphique</span>
+            </ion-card-content>
+        </ion-card>
+    </div>
 
 </ion-content>

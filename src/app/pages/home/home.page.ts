@@ -26,4 +26,29 @@ export class HomePage implements OnInit {
     }, 2000);
   }
 
+    gotoEG(){
+        this.router.navigate(['/etat-global-dossier']);
+    }
+
+    gotoCDossier(){
+        this.router.navigate(['/estimation-import-article']);
+    }
+
+    gotoTE(){
+        this.router.navigate(['/tendance-evolution-mois']);
+    }
+
+    gotoTM(){
+        this.router.navigate(['/demandes-traitees-articles']);
+    }
+
+    gotoPC(){
+        this.router.navigate(['/performance-comparee']);
+    }
+
+    gotoPT(){
+        this.router.navigate(['/estimation-import-mois']);
+    }
+
+
 }
