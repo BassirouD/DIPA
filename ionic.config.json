@@ -1,0 +1,7 @@
+{
+  "name": "DIPA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

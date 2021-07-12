@@ -1,0 +1,35 @@
+<ion-header [translucent]="true" scrollEvents="true" (ionScroll)="onScroll($event)">
+  <ion-toolbar color="monvert">
+    <ion-title class="text-white">
+      Bienvenue, Bassirou
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="text-white">
+        <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row class="sticky-row">
+    <ion-col size="10">
+      <ion-text class="ion-padding-start" color="medium"
+                [ngClass]="{'location-visible': showLocationDetail, 'location-hidden': !showLocationDetail}">
+      </ion-text>
+      <ion-searchbar placeholder="Votre recherche ici"></ion-searchbar>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button class="classButom text-white" fill="clear">
+        <ion-icon class="tailleIcon" name="options-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <br>
+
+</ion-content>
