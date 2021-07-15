@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TendanceEvolutionMoisPageRoutingModule } from './tendance-evolution-mois-routing.module';
 
 import { TendanceEvolutionMoisPage } from './tendance-evolution-mois.page';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TendanceEvolutionMoisPageRoutingModule
+    TendanceEvolutionMoisPageRoutingModule,
+    ChartModule
   ],
   declarations: [TendanceEvolutionMoisPage]
 })

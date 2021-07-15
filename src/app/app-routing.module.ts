@@ -41,7 +41,15 @@ const routes: Routes = [
   {
     path: 'tendance-evolution-mois',
     loadChildren: () => import('./pages-dossiers/tendance-evolution-mois/tendance-evolution-mois.module').then( m => m.TendanceEvolutionMoisPageModule)
+  },  {
+    path: 'tendancemodal',
+    loadChildren: () => import('./modals/tendancemodal/tendancemodal.module').then( m => m.TendancemodalPageModule)
+  },
+  {
+    path: 'classementlongmodal',
+    loadChildren: () => import('./modals/classementlongmodal/classementlongmodal.module').then( m => m.ClassementlongmodalPageModule)
   }
+
 ];
 @NgModule({
   imports: [

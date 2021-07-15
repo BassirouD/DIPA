@@ -1,10 +1,10 @@
 <ion-header [translucent]="true" scrollEvents="true" (ionScroll)="onScroll($event)">
     <ion-toolbar color="monvert">
         <ion-back-button slot="start" color="white" defaultHref="/tabs/home"></ion-back-button>
-        <ion-title class="text-white">Performance comparée</ion-title>
+        <ion-title class="text-white" style="font-size: 15px">Performance comparée</ion-title>
         <ion-buttons slot="end">
             <ion-button class="text-white">
-                <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+                <ion-icon name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -35,42 +35,106 @@
         <ion-col>
             <ion-card class="text-center classSelect">
                 <ion-item>
-                    <ion-label>Choisir</ion-label>
-                    <ion-select value="notifications">
-                        <ion-select-option value="1">Assurance</ion-select-option>
-                        <ion-select-option value="2">Bank Ecobank</ion-select-option>
-                        <ion-select-option value="3">Hopital</ion-select-option>
-                        <ion-select-option value="4">Captivation</ion-select-option>
-                        <ion-select-option value="5">I dont know</ion-select-option>
-                    </ion-select>
+                    <ion-row>
+                        <span>Année 1: </span>
+                    </ion-row>
+                    <ion-row>
+                        <ion-input type="text" [(ngModel)]="loadData.annee1" required="" name="annee1"></ion-input>
+                    </ion-row>
                 </ion-item>
             </ion-card>
         </ion-col>
     </ion-row>
 
+    <ion-row>
+        <ion-col>
+            <ion-card class="text-center classSelect">
+                <ion-item>
+                    <ion-row>
+                        <span>Année 2: </span>
+                    </ion-row>
+                    <ion-row>
+                        <ion-input type="text" [(ngModel)]="loadData.annee2" required="" name="annee2"></ion-input>
+                    </ion-row>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <div class="bouton">
+        <ion-button color="primary" expand="full" (click)="parametrer1()" shape="round"
+                    style="margin-left: 20px; margin-right: 20px"><span>Afficher</span></ion-button>
+    </div>
+
     <ion-row class="classAlign">
-        <ion-col size="8" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
-            <span>Liste des dossiers</span>
+        <ion-col size="4" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
+            <span>Volume</span>
+        </ion-col>
+        <ion-col size="4" [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
+            <span>CA</span>
         </ion-col>
         <ion-col size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
-            <span>Vue graphique</span>
+            <span (click)="drawing()">Graphique</span>
         </ion-col>
     </ion-row>
 
     <div *ngIf="selecteTextId === 'text1'">
-        <ion-card>
-            <ion-card-header>Je suis le titre</ion-card-header>
-            <ion-card-content>
-                <span>Liste des dossiers</span>
-            </ion-card-content>
-        </ion-card>
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;" *ngIf="data">
+            <thead style="text-align: center;">
+
+            <tr>
+                <th>Mois</th>
+                <th>Volume demandes</th>
+                <th>Années</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of data">
+                <td style="text-align: center;">{{mois[d.Periode - 1]}}</td>
+                <td style="text-align: center;">
+                    <span style="color: black; font-size: 12px; font-weight: bold;"> {{d.count}}</span></td>
+                <td style="text-align: center;"><span
+                    style="color: black; font-size: 12px; font-weight: bold;">{{d.annee}}</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="selecteTextId === 'text3'">
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;"
+               *ngIf="valeurs">
+            <thead style="text-align: center;">
+
+            <tr>
+                <th>Mois</th>
+                <th>Valeurs(CFA)</th>
+                <th>Année</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let v of valeurs">
+                <td style="text-align: center;">{{mois[v.Periode - 1]}}</td>
+                <td style="text-align: right;">
+                    <span style="color: black; font-size: 11.5px; font-weight: bold;"> {{numStr(v.total, ' ')}}</span>
+                </td>
+                <td style="text-align: center;"><span
+                    style="color: black; font-size: 12px; font-weight: bold;">{{v.annee}}</span></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div *ngIf="selecteTextId === 'text2'">
         <ion-card>
-            <ion-card-header>Je suis le titre</ion-card-header>
+            <ion-list>
+                <ion-item>
+                    <span>Volume ou CA</span>
+                    <ion-toggle [(ngModel)]="pepperoni" color="primary" slot="end" (ionChange)="change()"></ion-toggle>
+                </ion-item>
+            </ion-list>
+            <ion-card-header></ion-card-header>
             <ion-card-content>
-                <span>Ve graphique</span>
+                <div [chart]="chartOptions" style="width:80%; height:390px;margin:auto;"></div>
             </ion-card-content>
         </ion-card>
     </div>

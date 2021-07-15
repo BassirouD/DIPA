@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { EstimationImportMoisPageRoutingModule } from './estimation-import-mois-routing.module';
 
 import { EstimationImportMoisPage } from './estimation-import-mois.page';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EstimationImportMoisPageRoutingModule
+    EstimationImportMoisPageRoutingModule,
+    ChartModule
   ],
   declarations: [EstimationImportMoisPage]
 })

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" scrollEvents="true" (ionScroll)="onScroll($event)">
     <ion-toolbar color="monvert">
         <ion-back-button slot="start" color="white" defaultHref="/tabs/home"></ion-back-button>
-        <ion-title class="text-white">Etat global des dossiers</ion-title>
+        <ion-title class="text-white" style="font-size: 15px">Etat global des dossiers</ion-title>
         <ion-buttons slot="end">
             <ion-button class="text-white">
                 <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
@@ -39,33 +39,68 @@
             <span>Traitées</span>
         </ion-col>
         <ion-col [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
-            <span>Vue graphique</span>
+            <span (click)="listJoindresGraphiques()">Graphique</span>
         </ion-col>
     </ion-row>
 
     <div *ngIf="selecteTextId === 'text1'">
-        <ion-card>
+        <!-- <ion-card>
             <ion-card-header>Je suis le titre</ion-card-header>
             <ion-card-content>
                 <span>Soumises ici</span>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto; margin-top: 5px;">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Mois</th>
+                <th>Nombre demandes</th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let d of data" style="text-align: center;">
+                <td><ion-icon name="search-outline"></ion-icon></td>
+                <td>
+                  <span style="color: black; font-size: 12px; font-weight: bold;"> {{mois[d.Periode-1]}}</span></td>
+                <td><span style="color: black; font-size: 12px; font-weight: bold;">{{d.count}}</span></td>
+              </tr>
+            </tbody>
+          </table>
     </div>
 
     <div *ngIf="selecteTextId === 'text2'">
-        <ion-card>
+        <!-- <ion-card>
             <ion-card-header>Je suis le titre</ion-card-header>
             <ion-card-content>
                 <span>Traitées ici</span>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
+
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto; margin-top: 5px;">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Mois</th>
+                <th>Nombre demandes traitées</th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let v of valeurs" style="text-align:center;">
+                <td><ion-icon name="search-outline"></ion-icon></td>
+                <td>
+                  <span style="color: black; font-size: 12px; font-weight: bold;"> {{mois[v.Periode-1]}}</span></td>
+                <td><span style="color: black; font-size: 12px; font-weight: bold;">{{v.count}}</span></td>
+              </tr>
+            </tbody>
+          </table>
     </div>
 
     <div *ngIf="selecteTextId === 'text3'">
         <ion-card>
-            <ion-card-header>Je suis le titre</ion-card-header>
+            <ion-card-header></ion-card-header>
             <ion-card-content>
-                <span>Graphique ici</span>
+                <div [chart]="chartOptions" style="width:80%; height:390px;margin:auto;"></div>
             </ion-card-content>
         </ion-card>
     </div>

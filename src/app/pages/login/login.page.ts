@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertController, LoadingController, NavController, ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,69 +11,61 @@ import {Router} from "@angular/router";
 })
 export class LoginPage implements OnInit {
 
-  loadData={username:'',password:''} ;
+  loadData={login:'',password:''} ;
   user:any;
   userForm:FormGroup;
   user1:any;
   constructor(public loadingController:LoadingController,
               public router:Router,
               private toastController: ToastController,
-              private alertCtrl: AlertController,public nav:NavController,private formBuilder:FormBuilder) { }
+              private alertCtrl: AlertController,
+              public nav:NavController,
+              private formBuilder:FormBuilder,private auths:AuthService) { }
 
   ngOnInit() {
+    this.userForm=this.formBuilder.group({
+      login:['',Validators.required],
+      password:['',Validators.required]
+    });
   }
+
 
   async login1(){
-    // const loading = await this.loadingController.create({
-    //     message:"Please wait !!!",
-    //     duration: 2000
-    // });
-    // await loading.present()
-    // //this.userForm.value.grant_type="password"
-    // let grant_type="password"
-    //
-    // console.log( 'loaddata '+ JSON.stringify(this.loadData));
-    // let body = `username=${this.loadData.username}&password=${this.loadData.password}&grant_type=${grant_type}`;
-    // console.log(body);
-    // this.auths.login(body)
-    //     .subscribe(resp=>{
-    //         this.user=resp;
-    //         console.log('user ::'+JSON.stringify(this.user))
-    //         loading.dismiss();
-    //         //
-    //         if(this.user!=null){
-    //             localStorage.setItem('loggedIn','true');
-    //             localStorage.setItem('login',this.loadData.username)
-    //             localStorage.setItem('token',this.user.access_token);
-    //             this.presentAlert("Connexion réussie !!");
-    //             //this.router.navigate(['parametrage']);
-    //             this.auths.getUserbyLogin(this.loadData.username)
-    //                 .subscribe(data=>{
-    //                     this.user1=data;
-    //                     localStorage.setItem('id',this.user1.ID);
-    //                     localStorage.setItem('iden',this.user1.identreprise);
-    //                     localStorage.setItem('idapp',this.user1.idapplication);
-    //                     //console.log("user 1"+ JSON.stringify(this.user1))
-    //                     let id = this.user1.ID;
-    //                     if(this.user1.DEFAULTPWD==='0'){
-    //                         this.router.navigate(['/tabs/overview',id]);
-    //
-    //                     }else{
-    //                         this.router.navigate(['confirmpassword'])
-    //                     }
-    //                 })
-    //         }else{
-    //             this.presentAlert("Paramétre authentification non correct!!");
-    //         }
-    //
-    //     },err=>{
-    //         this.presentAlert("Erreur authentification!!");
-    //     })
+    const loading = await this.loadingController.create({
+      message:"Please wait !!!",
+      duration:3000
+    });
+    await loading.present()
 
-    this.router.navigate(['/tabs/home']);
+    //console.log(this.userForm.value);
+    let body = `login=${this.userForm.value.login}&password=${this.userForm.value.password}`;
+
+     this.auths.login1(body)
+     .subscribe(resp=>{
+       this.user=resp;
+       //console.log('user ::'+JSON.stringify(this.user))
+      loading.dismiss();
+      //
+      if(this.user!=null){
+        localStorage.setItem('loggedIn','true');
+        localStorage.setItem('login',this.user.login)
+        localStorage.setItem('id',this.user.ID);
+        this.presentAlert("Connexion réussie !!");
+        console.log('default '+this.user.DEFAULTPWD)
+        if(this.user.DEFAULTPWD==='0'){
+          this.router.navigate(['tabs/home']);
+         }else{
+           this.router.navigate(['change-password'])
+         }
+      }else{
+        this.presentAlert("Paramétre authentification non correct!!");
+      }
+
+     },err=>{
+       this.presentAlert("Erreur authentification!!");
+     })
 
   }
-
 
   async presentAlert(mgs) {
     const alert = await this.alertCtrl.create({

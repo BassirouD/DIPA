@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import {Router} from "@angular/router";
 import {AlertController, LoadingController, NavController, ToastController} from "@ionic/angular";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-change-password',
@@ -14,17 +16,20 @@ export class ChangePasswordPage implements OnInit {
     id=localStorage.getItem('id');
     user:any;
 
-    container = document.querySelector(".container")
-
-    constructor(private router: Router,
-                public loadingController:LoadingController,
-                private toastController: ToastController,
-                public nav:NavController,
-                private alertCtrl: AlertController
-    ) { }
+    constructor(private authS:AuthService,
+      private formBuilder:FormBuilder,
+      private router:Router,public loadingController:LoadingController,
+      private toastController: ToastController,public auths:AuthService,public nav:NavController,
+       private alertCtrl: AlertController) { }
+    userPassword=this.formBuilder.group({
+      password:['',Validators.required],
+      confirmPass:['',Validators.required]
+    })
 
     ngOnInit() {
     }
+    container = document.querySelector(".container")
+
 
     goToCompte(){
         this.router.navigateByUrl('/tabs/profile')
@@ -60,34 +65,34 @@ export class ChangePasswordPage implements OnInit {
     }
 
     async changePassword(){
-        // const loading = await this.loadingController.create({
-        //     message:"Please wait !!!",
-        //     duration:3000
-        // });
-        // await loading.present()
-        // if(this.loadData.password===this.loadData.confirmpassword){
-        //     let body = `login=${this.login}&password=${this.loadData.password}`;
-        //     // alert(JSON.stringify(body))
-        //     this.authS.changePwd(body)
-        //         .subscribe(data=>{
-        //             loading.dismiss();
-        //             this.presentAlert("Mot de passe modifié !!");
-        this.router.navigate(['/tabs/profile'])
-        //         },err=>{
-        //             console.log("error "+err);
-        //         })
-        // }else{
-        //     this.presentAlert("Mot de passe non conforme !!");
-        // }
+        const loading = await this.loadingController.create({
+          message:"Please wait !!!",
+          duration:3000
+        });
+        await loading.present()
+        if(this.userPassword.value.password===this.userPassword.value.confirmPass){
+          let body = `id=${this.id}&password=${this.userPassword.value.password}`;
+          this.authS.changePwd(body)
+          .subscribe(data=>{
+           loading.dismiss();
+           this.presentAlert("Mot de passe modifié !!");
+            this.router.navigateByUrl('/');
+          },err=>{
+            console.log("error "+err);
+          })
+        }else{
+          this.presentAlert("Mot de passe non conforme !!");
+        }
 
-    }
+      }
 
-    getUser(){
-        // this.authS.getUserbyLogin(this.login)
-        //     .subscribe(data=>{
-        //         this.user=data;
-        //     })
-    }
+
+      getUser(){
+         this.authS.getUserDetail(this.login)
+         .subscribe(data=>{
+           this.user=data;
+         })
+      }
 
 
 }

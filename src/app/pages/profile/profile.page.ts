@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,10 +10,34 @@ import {Router} from "@angular/router";
 export class ProfilePage implements OnInit {
 
   showLocationDetail = false;
+  user:any;
+  login=localStorage.getItem('login')
+  nom:any;
+  prenom:any;
+  email:any;
+  telepohne:any;
+  constructor(private authS:AuthService,private router:Router) {}
 
-  constructor(private router: Router,) { }
+  ngOnInit(): void {
+    //console.log(this.login)
+    this.chechUser();
+  }
 
-  ngOnInit() {
+  check(){
+    this.chechUser();
+  }
+
+  chechUser(){
+    this.authS.getUserDetail(this.login)
+    .subscribe(resp=>{
+      this.user=resp;
+      console.log(this.user);
+      this.nom=this.user.nom
+      this.prenom=this.user.prenom
+      this.email=this.user.email;
+      this.telepohne=this.user.telephone;
+
+    })
   }
 
   onScroll(ev) {
@@ -27,14 +52,8 @@ export class ProfilePage implements OnInit {
   }
 
   logOut(){
-    localStorage.removeItem('login');
-    localStorage.removeItem('id');
-    localStorage.removeItem('token');
-    localStorage.removeItem('code');
-    localStorage.removeItem('iden');
-    localStorage.removeItem('leggedIn');
-    localStorage.removeItem('idapp');
     localStorage.removeItem('annee');
+   localStorage.removeItem('periode');
     this.router.navigateByUrl('/');
   }
 
