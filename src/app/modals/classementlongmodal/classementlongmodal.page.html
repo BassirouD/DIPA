@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title style="font-size: 12px;">Valeurs du produit : {{produit}}</ion-title>
+      <!-- &nbsp; &nbsp;
+      <ion-icon style="font-weight: bold;" name="phone-landscape-outline"  (click)="setLandscape()"></ion-icon>
+      &nbsp; &nbsp;
+      <ion-icon style="font-weight: bold;" name="phone-portrait-outline" style="text-align: center;" (click)="setPortrait()"></ion-icon> -->
+      <ion-icon style="font-weight: bold;" name="close" slot="end" style="height: 50px; width: 100;" (click)="close()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content fullscreen style="margin-top:40px;">
+    <ion-card class="welcome-card" style="margin:auto; margin-top: 30px;">
+      <ion-card-header>
+        <ion-card-title style="text-align: center;">Volume des demandes produit : {{produit}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div [chart]="chartOptions" style="width:80%; height:390px;margin:auto;"></div>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
