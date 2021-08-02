@@ -4,7 +4,7 @@
         <ion-title class="text-white">Tendance et evolution par mois</ion-title>
         <ion-buttons slot="end">
             <ion-button class="text-white">
-                <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+                <ion-icon name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -30,102 +30,110 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <br>
-            <ion-row>
-                <ion-col>
-                    <ion-card class="text-center classSelect">
-                        <ion-item>
-                            <ion-row>
-                                <span>Année1: </span>
-                            </ion-row>
-                            <ion-row>
-                                <ion-input type="text"  [(ngModel)]="loadData.annee1" required="" name="annee1" style="color: black; font-weight: bold;"></ion-input>
-                            </ion-row>
-                        </ion-item>
-                    </ion-card>
-                </ion-col>
-                <ion-col>
-                    <ion-card class="text-center classSelect">
-                        <ion-item>
-                            <ion-row>
-                                <span>Année2: </span>
-                            </ion-row>
-                            <ion-row>
-                                <ion-input type="text"  [(ngModel)]="loadData.annee2" required="" name="annee2" style="color: black; font-weight: bold;"></ion-input>
-                            </ion-row>
-                        </ion-item>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-card class="text-center classSelect">
+                <ion-item>
+                    <ion-row>
+                        <span>Année1: </span>
+                    </ion-row>
+                    <ion-row>
+                        <ion-input type="text" [(ngModel)]="loadData.annee1" required="" name="annee1"
+                                   style="color: black; font-weight: bold;"></ion-input>
+                    </ion-row>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+        <ion-col>
+            <ion-card class="text-center classSelect">
+                <ion-item>
+                    <ion-row>
+                        <span>Année2: </span>
+                    </ion-row>
+                    <ion-row>
+                        <ion-input type="text" [(ngModel)]="loadData.annee2" required="" name="annee2"
+                                   style="color: black; font-weight: bold;"></ion-input>
+                    </ion-row>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+    </ion-row>
 
-            <div class="bouton">
-            <ion-button color="primary" expand="full" (click)="parametrer()" shape="round" style="margin-right: 20px;margin-left: 20px"><span>Afficher</span></ion-button>
-            </div>
+    <div class="bouton">
+        <ion-button color="primary" expand="full" (click)="parametrer()" shape="round"
+                    style="margin-right: 20px;margin-left: 20px"><span>Afficher</span></ion-button>
+    </div>
 
-            <ion-row class="classAlign">
-                <ion-col size="8" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
-                    <span>Volume</span>
-                </ion-col>
+    <ion-row class="classAlign">
+        <ion-col size="8" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
+            <span>Volume</span>
+        </ion-col>
 
-                <ion-col size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
-                    <span>Graphique</span>
-                </ion-col>
-            </ion-row>
+        <ion-col class="text-right" size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
+            <span>Graphique</span>
+        </ion-col>
+    </ion-row>
 
-            <div *ngIf="selecteTextId === 'text1'">
-            <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;" *ngIf="data">
-                <thead style="text-align: center;">
-                  <tr>
-                    <th>Mois</th>
-                    <th>Volume demandes</th>
-                    <th>Année</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let d of data">
-                    <td style="text-align: center;">{{mois[d.Periode-1]}}</td>
-                    <td style="text-align: center;">
-                      <span style="color: black; font-size: 12px; font-weight: bold;"> {{d.count}}</span></td>
-                    <td style="text-align: center;"><span style="color: black; font-size: 12px; font-weight: bold;">{{d.annee}}</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+    <div *ngIf="selecteTextId === 'text1'">
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;" *ngIf="data">
+            <thead style="text-align: center;">
+            <tr>
+                <th>Mois</th>
+                <th>Volume demandes</th>
+                <th>Année</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of data">
+                <td style="text-align: center;">{{mois[d.Periode - 1]}}</td>
+                <td style="text-align: center;">
+                    <span style="color: black; font-size: 12px; font-weight: bold;"> {{d.count}}</span></td>
+                <td style="text-align: center;"><span
+                    style="color: black; font-size: 12px; font-weight: bold;">{{d.annee}}</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-            <div *ngIf="selecteTextId === 'text2'">
-                <ion-row>
-                    <ion-col>
-                        <ion-card class="text-center classSelect">
-                            <ion-item>
-                                <ion-row>
-                                    <span>Année1: </span>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-input type="text"  [(ngModel)]="loadData1.annee1" required="" name="annee1" style="color: black; font-weight: bold;" (ionChange)="checkannee1($event)"></ion-input>
-                                </ion-row>
-                            </ion-item>
-                        </ion-card>
-                    </ion-col>
-                    <ion-col>
-                        <ion-card class="text-center classSelect">
-                            <ion-item>
-                                <ion-row>
-                                    <span>Année2: </span>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-input type="text"  [(ngModel)]="loadData1.annee2" required="" name="annee2" style="color: black; font-weight: bold;" (ionChange)="checkannee2($event)"></ion-input>
-                                </ion-row>
-                            </ion-item>
-                        </ion-card>
-                    </ion-col>
-                </ion-row>
-
-                <ion-card *ngIf="mode1===1">
-                    <ion-card-header></ion-card-header>
-                    <ion-card-content>
-                        <div [chart]="chartOptions" style="width:80%; height:390px;margin:auto;"></div>
-                    </ion-card-content>
+    <div *ngIf="selecteTextId === 'text2'">
+        <ion-row>
+            <ion-col>
+                <ion-card class="text-center classSelect">
+                    <ion-item>
+                        <ion-row>
+                            <span>Année1: </span>
+                        </ion-row>
+                        <ion-row>
+                            <ion-input type="text" [(ngModel)]="loadData1.annee1" required="" name="annee1"
+                                       style="color: black; font-weight: bold;"
+                                       (ionChange)="checkannee1($event)"></ion-input>
+                        </ion-row>
+                    </ion-item>
                 </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="text-center classSelect">
+                    <ion-item>
+                        <ion-row>
+                            <span>Année2: </span>
+                        </ion-row>
+                        <ion-row>
+                            <ion-input type="text" [(ngModel)]="loadData1.annee2" required="" name="annee2"
+                                       style="color: black; font-weight: bold;"
+                                       (ionChange)="checkannee2($event)"></ion-input>
+                        </ion-row>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
-            </div>
+        <ion-card *ngIf="mode1===1">
+            <ion-card-header></ion-card-header>
+            <ion-card-content>
+                <div [chart]="chartOptions" style="width:80%; height:390px;margin:auto;"></div>
+            </ion-card-content>
+        </ion-card>
+
+    </div>
 
 </ion-content>

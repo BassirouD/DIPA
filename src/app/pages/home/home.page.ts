@@ -53,16 +53,16 @@ export class HomePage implements OnInit {
       localStorage.setItem('annee',annee);
   }
 
-  onScroll(ev) {
-    const offset = ev.detail.scrollTop;
-    this.showLocationDetail = offset > 40;
-  }
+    onScroll(ev) {
+        const offset = ev.detail.scrollTop;
+        this.showLocationDetail = offset > 40;
+    }
 
-  doRefresh(event) {
-    setTimeout(() => {
-      event.target.complete();
-    }, 2000);
-  }
+    doRefresh(event) {
+        setTimeout(() => {
+            event.target.complete();
+        }, 2000);
+    }
 
     gotoEG(){
         this.router.navigate(['/etat-global-dossier']);
@@ -87,6 +87,5 @@ export class HomePage implements OnInit {
     gotoPT(){
         this.router.navigate(['/estimation-import-mois']);
     }
-
 
 }

@@ -4,7 +4,7 @@
         <ion-title class="text-white">Estimation des imports par mois</ion-title>
         <ion-buttons slot="end">
             <ion-button class="text-white">
-                <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+                <ion-icon name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -36,7 +36,7 @@
         <ion-col size="8" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
             <span>Estimations</span>
         </ion-col>
-        <ion-col size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
+        <ion-col class="text-right" size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
             <span (click)="sommesByMontsByYear()">Graphique</span>
         </ion-col>
     </ion-row>
@@ -44,19 +44,20 @@
     <div *ngIf="selecteTextId === 'text1'">
         <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;">
             <thead style="text-align: center;">
-              <tr>
+            <tr>
                 <th>Mois</th>
                 <th>Valeurs (CFA)</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let d of data">
+            <tr *ngFor="let d of data">
                 <td style="text-align: center;">
-                  <span style="color: black; font-size: 12px; font-weight: bold;"> {{mois[d.periode-1]}}</span></td>
-                <td style="text-align: right;"><span style="color: black; font-size: 11.5px; font-weight: bold;">{{numStr(d.total,' ')}}</span></td>
-              </tr>
+                    <span style="color: black; font-size: 12px; font-weight: bold;"> {{mois[d.periode - 1]}}</span></td>
+                <td style="text-align: right;" class="text-center"><span
+                    style="color: black; font-size: 11.5px; font-weight: bold;">{{numStr(d.total, ' ')}}</span></td>
+            </tr>
             </tbody>
-          </table>
+        </table>
     </div>
 
     <div *ngIf="selecteTextId === 'text2'">

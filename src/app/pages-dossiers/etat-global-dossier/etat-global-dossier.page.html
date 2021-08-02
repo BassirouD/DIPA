@@ -35,10 +35,10 @@
         <ion-col [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
             <span>Soumises</span>
         </ion-col>
-        <ion-col [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
+        <ion-col class="text-center" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
             <span>Traitées</span>
         </ion-col>
-        <ion-col [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
+        <ion-col class="text-right" [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
             <span (click)="listJoindresGraphiques()">Graphique</span>
         </ion-col>
     </ion-row>

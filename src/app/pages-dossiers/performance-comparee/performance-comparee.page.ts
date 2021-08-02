@@ -221,7 +221,6 @@ export class PerformanceCompareePage implements OnInit {
             }, err => {
                 console.log(err);
             })
-
     }
 
 

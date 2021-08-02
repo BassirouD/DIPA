@@ -1,123 +1,122 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { Chart } from 'angular-highcharts';
-import { ManagerService } from 'src/app/services/manager.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AlertController, LoadingController, ModalController, ToastController} from '@ionic/angular';
+import {Chart} from 'angular-highcharts';
+import {ManagerService} from 'src/app/services/manager.service';
 
 @Component({
-  selector: 'app-tendance-evolution-mois',
-  templateUrl: './tendance-evolution-mois.page.html',
-  styleUrls: ['./tendance-evolution-mois.page.scss'],
+    selector: 'app-tendance-evolution-mois',
+    templateUrl: './tendance-evolution-mois.page.html',
+    styleUrls: ['./tendance-evolution-mois.page.scss'],
 })
 export class TendanceEvolutionMoisPage implements OnInit {
-    annee=localStorage.getItem('annee');
-    loadData={annee1:'',annee2:''};
-    periode=parseInt(localStorage.getItem('periode'));
-    valeurs:any;
-    mode:string='';
-    mois:any=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aôut','Septembre','Octobre','Novembre','Décembre'];
-    data:any;
-    moisder:any=[];
-    data1:any=[];
-    data2:any=[];
+    annee = localStorage.getItem('annee');
+    loadData = {annee1: '', annee2: ''};
+    periode = parseInt(localStorage.getItem('periode'));
+    valeurs: any;
+    mode: string = '';
+    mois: any = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aôut', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    data: any;
+    moisder: any = [];
+    data1: any = [];
+    data2: any = [];
     private selecteTextId: string = 'text1';
-    diff:number;
-    loadData1={annee1:'',annee2:''}
-    chartData:any=[];
-    chartData1:any=[];
-    chartOptions:any;
-    mode1=0;
+    diff: number;
+    loadData1 = {annee1: '', annee2: ''}
+    chartData: any = [];
+    chartData1: any = [];
+    chartOptions: any;
+    mode1 = 0;
 
-    constructor(private route:Router,public modal:ModalController,private manager:ManagerService,
-        public loadingController:LoadingController,private toastController: ToastController,private alertCtrl: AlertController) { }
+    constructor(private route: Router, public modal: ModalController, private manager: ManagerService,
+                public loadingController: LoadingController, private toastController: ToastController, private alertCtrl: AlertController) {
+    }
 
-      ngOnInit() {
+    ngOnInit() {
         //this.plotSimpleBarChart();
         //this.listJoindres();
-      }
+    }
 
-      checkannee1(event){
-          this.loadData1.annee1=event.target.value;
-          console.log(this.loadData1.annee1)
-          if(this.loadData1.annee2!=''){
-             this.drawing();
-          }
-      }
+    checkannee1(event) {
+        this.loadData1.annee1 = event.target.value;
+        console.log(this.loadData1.annee1)
+        if (this.loadData1.annee2 != '') {
+            this.drawing();
+        }
+    }
 
 
-
-      effacer(){
+    effacer() {
         //this.modee=0;
         //this.loadData.annee1=''
         //this.loadData.annee2=''
-        this.chartData=[];
-        this.chartData1=[];
-      }
+        this.chartData = [];
+        this.chartData1 = [];
+    }
 
 
-      drawing(){
+    drawing() {
         this.effacer();
-        this.mode1=1;
-        this.manager.listJoindre2Months(this.loadData1.annee1,this.loadData1.annee2)
-        .subscribe(resp=>{
-          this.data=resp;
-          console.log(this.data);
-          for(var i=0;i<=this.data.length;i++){
-            //console.log( "anneee "+ this.data[i].annee);
-            this.moisder.push(this.mois[this.data[i]?.Periode-1]);
-            if(this.data[i]?.annee===parseInt(this.loadData1.annee1)){
-                 this.chartData.push(this.data[i]?.count);
-                 console.log(' Bon !!');
-            }
-            if(parseInt(this.data[i]?.annee)===parseInt(this.loadData1.annee2)){
-             this.chartData1.push(this.data[i]?.count);
+        this.mode1 = 1;
+        this.manager.listJoindre2Months(this.loadData1.annee1, this.loadData1.annee2)
+            .subscribe(resp => {
+                this.data = resp;
+                console.log(this.data);
+                for (var i = 0; i <= this.data.length; i++) {
+                    //console.log( "anneee "+ this.data[i].annee);
+                    this.moisder.push(this.mois[this.data[i]?.Periode - 1]);
+                    if (this.data[i]?.annee === parseInt(this.loadData1.annee1)) {
+                        this.chartData.push(this.data[i]?.count);
+                        console.log(' Bon !!');
+                    }
+                    if (parseInt(this.data[i]?.annee) === parseInt(this.loadData1.annee2)) {
+                        this.chartData1.push(this.data[i]?.count);
+                    }
+                }
+                console.log('charting ' + this.chartData)
+                console.log('charting 2 ' + this.chartData1)
+                this.chartOptions = new Chart({
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: 'Tendance évolutive ' + this.loadData1.annee1 + ' et ' + this.loadData1.annee2
+                    },
+                    colors: [
+                        '#6495ED',
+                        '#FFA500'
+                    ],
+                    xAxis: {
+                        categories: this.moisder
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Volume DIPA'
+                        }
+                    },
+                    series: [{
+                        name: this.loadData1.annee1,
+                        type: undefined,
+                        data: this.chartData
+                    }, {
+                        name: this.loadData1.annee2,
+                        type: undefined,
+                        data: this.chartData1
+                    },]
+
+                });
+
+            }, err => {
+                console.log(err);
+            })
+    }
+
+    checkannee2(event) {
+        this.loadData1.annee2 = event.target.value;
+        if (this.loadData1.annee1 != '') {
+            this.drawing();
         }
-
-       }
-       console.log('charting '+this.chartData)
-       console.log('charting 2 '+this.chartData1)
-       this.chartOptions =new Chart({
-         chart: {
-          type: 'spline'
-        },
-        title: {
-          text: 'Tendance évolutive '+this.loadData1.annee1+'et '+this.loadData1.annee2
-        },
-       colors:[
-         '#6495ED',
-         '#FFA500'
-      ],
-        xAxis: {
-          categories: this.moisder
-        },
-        yAxis: {
-          title: {
-            text: 'Volume DIPA'
-        }
-        },
-        series:[{
-         name:this.loadData1.annee1,
-         type:undefined,
-          data: this.chartData
-        },{
-         name: this.loadData1.annee2,
-         type:undefined,
-          data: this.chartData1
-        },]
-
-      });
-
-        },err=>{
-          console.log(err);
-        })
-      }
-
-      checkannee2(event){
-         this.loadData1.annee2=event.target.value;
-         if(this.loadData1.annee1!=''){
-             this.drawing();
-         }
-      }
+    }
 
     //   setLandscape(){
     //     // set to landscape
@@ -129,33 +128,32 @@ export class TendanceEvolutionMoisPage implements OnInit {
     //     this.screen.lock(this.screen.ORIENTATIONS.PORTRAIT);
     //   }
 
-      async presentAlert(mgs) {
+    async presentAlert(mgs) {
         const alert = await this.alertCtrl.create({
-          header: 'Info',
-          message: mgs,
-          buttons: ['OK']
+            header: 'Info',
+            message: mgs,
+            buttons: ['OK']
         });
 
         await alert.present();
 
-      }
+    }
 
-      async presentToast(msg) {
+    async presentToast(msg) {
         const toast = await this.toastController.create({
-          message: msg,
-          duration: 2000
+            message: msg,
+            duration: 2000
         });
         toast.present();
-      }
+    }
 
-      setSelectedText(textId: string) {
+    setSelectedText(textId: string) {
         this.selecteTextId = textId;
     }
 
-    getTextColor(textId: string): string{
-        return this.selecteTextId == textId? "highlight-color" : "";
+    getTextColor(textId: string): string {
+        return this.selecteTextId == textId ? "highlight-color" : "";
     }
-
 
 
     // async open(){
@@ -166,28 +164,28 @@ export class TendanceEvolutionMoisPage implements OnInit {
     //   modal.present();
     // }
 
-    async parametrer(){
-        this.diff= parseInt(this.loadData.annee2) - parseInt(this.loadData.annee1);
+    async parametrer() {
+        this.diff = parseInt(this.loadData.annee2) - parseInt(this.loadData.annee1);
 
-       const loading = await this.loadingController.create({
-        message:"Veuillez patienter !!!",
-        duration:3000
-      });
-      await loading.present()
-      console.log(this.loadData.annee1);
-       this.manager.listtendances(this.loadData.annee1,this.loadData.annee2)
-       .subscribe(resp=>{
-         this.data=resp;
-         console.log(this.data);
-         if(this.data.length !=0){
-          loading.dismiss();
+        const loading = await this.loadingController.create({
+            message: "Veuillez patienter !!!",
+            duration: 3000
+        });
+        await loading.present()
+        console.log(this.loadData.annee1);
+        this.manager.listtendances(this.loadData.annee1, this.loadData.annee2)
+            .subscribe(resp => {
+                this.data = resp;
+                console.log(this.data);
+                if (this.data.length != 0) {
+                    loading.dismiss();
 
-        }else{
-          this.presentAlert("Aucune donnée pour cet intervalle !!");
-        }
-       },err=>{
-         console.log(err);
-       })
+                } else {
+                    this.presentAlert("Aucune donnée pour cet intervalle !!");
+                }
+            }, err => {
+                console.log(err);
+            })
     }
 
 
