@@ -1,186 +1,191 @@
 <ion-header [translucent]="true" scrollEvents="true" (ionScroll)="onScroll($event)">
-  <ion-toolbar color="monvert">
-    <ion-title class="text-white" style="font-size: 15px">
-      Bienvenue, {{nom}} {{prenom}}
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button class="text-white">
-        <ion-icon  name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="monvert">
+        <ion-title class="text-white" style="font-size: 15px">
+            Bienvenue, {{nom}} {{prenom}}
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button class="text-white">
+                <ion-icon name="cog-outline" class="ionSizeSetting" slot="end"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 
-  <ion-row class="sticky-row">
-    <ion-col size="10">
-      <ion-text class="ion-padding-start" color="medium"
-                [ngClass]="{'location-visible': showLocationDetail, 'location-hidden': !showLocationDetail}">
-      </ion-text>
-      <ion-searchbar placeholder="Votre recherche ici"></ion-searchbar>
-    </ion-col>
-    <ion-col size="2">
-      <ion-button class="classButom text-white" fill="clear">
-        <ion-icon class="tailleIcon" name="options-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-row class="sticky-row">
+        <ion-col size="10">
+            <ion-text class="ion-padding-start" color="medium"
+                      [ngClass]="{'location-visible': showLocationDetail, 'location-hidden': !showLocationDetail}">
+            </ion-text>
+            <ion-searchbar placeholder="Votre recherche ici"></ion-searchbar>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button class="classButom text-white" fill="clear">
+                <ion-icon class="tailleIcon" name="options-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-header>
 
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <br>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <br>
 
-  <ion-row style="margin-left: 20px">
-    <ion-col size="4" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
+    <ion-row style="margin-left: 20px;margin-right: 20px">
+        <ion-col size="4" [ngClass]="getTextColor('text1')" (click)="setSelectedText('text1')">
 
-        <span style="font-size: 15px; ">Transitaires</span>
-    </ion-col>
-
-    <ion-col size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
-        <span style="font-size: 15px; " >Pays d’Origine</span>
-    </ion-col>
-
-    <ion-col size="4" [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
-        <span style="font-size: 15px;">Importateurs</span>
-    </ion-col>
-
-</ion-row>
-
-
-<div *ngIf="selecteTextId === 'text1'">
-    <ion-row>
-        <ion-col>
-            <ion-card class="text-center classSelect">
-            <ion-item no-lines class="genre">
-              <ion-label style="color:black;">Choisissez la période</ion-label>
-              <ion-select  [(ngModel)]="loadData.mois1" required="" name="mois1" type="number" (ionChange)="change1($event)">
-                <ion-select-option  value=1>Janvier</ion-select-option>
-                <ion-select-option  value=2>Février</ion-select-option>
-                <ion-select-option  value=3>Mars</ion-select-option>
-                <ion-select-option value=4>Avril</ion-select-option>
-                <ion-select-option value=5>Mai</ion-select-option>
-                <ion-select-option value=6>Juin</ion-select-option>
-                <ion-select-option value=7>Juillet</ion-select-option>
-                <ion-select-option value=8>Août</ion-select-option>
-                <ion-select-option value=9>Septembre</ion-select-option>
-                <ion-select-option value=10>Octobre</ion-select-option>
-                <ion-select-option value=11>Novembre</ion-select-option>
-                <ion-select-option value=12>Décembre</ion-select-option>
-              </ion-select>
-            </ion-item>
-            </ion-card>
+            <span style="font-size: 15px; ">Transitaires</span>
         </ion-col>
+
+        <ion-col class="text-center" size="4" [ngClass]="getTextColor('text2')" (click)="setSelectedText('text2')">
+            <span style="font-size: 15px; ">Pays d’Origine</span>
+        </ion-col>
+
+        <ion-col class="text-right" size="4" [ngClass]="getTextColor('text3')" (click)="setSelectedText('text3')">
+            <span style="font-size: 15px;">Importateurs</span>
+        </ion-col>
+
     </ion-row>
 
-       <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data">
-        <thead>
-          <tr>
-            <th>Société transit</th>
-            <th>Période</th>
-            <th>Valeurs(CFA)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of data" style="font-size: 12px;">
-            <td style="text-align: right;" *ngIf="d.nom!=null">{{d.nom}}</td>
-            <td style="text-align: right;" *ngIf="d.nom==null">N/A</td>
-            <td style="text-align: right;">{{mois[d.mois-1]}}</td>
-            <td style="text-align: right; font-size: 11.5px; font-weight: bold;">{{numStr(d.total,' ')}}</td>
 
-          </tr>
-        </tbody>
-      </table>
-</div>
+    <div *ngIf="selecteTextId === 'text1'">
+        <ion-row>
+            <ion-col>
+                <ion-card class="text-center classSelect">
+                    <ion-item no-lines class="genre">
+                        <ion-label style="color:black;">Choisissez la période</ion-label>
+                        <ion-select [(ngModel)]="loadData.mois1" required="" name="mois1" type="number"
+                                    (ionChange)="change1($event)">
+                            <ion-select-option value=1>Janvier</ion-select-option>
+                            <ion-select-option value=2>Février</ion-select-option>
+                            <ion-select-option value=3>Mars</ion-select-option>
+                            <ion-select-option value=4>Avril</ion-select-option>
+                            <ion-select-option value=5>Mai</ion-select-option>
+                            <ion-select-option value=6>Juin</ion-select-option>
+                            <ion-select-option value=7>Juillet</ion-select-option>
+                            <ion-select-option value=8>Août</ion-select-option>
+                            <ion-select-option value=9>Septembre</ion-select-option>
+                            <ion-select-option value=10>Octobre</ion-select-option>
+                            <ion-select-option value=11>Novembre</ion-select-option>
+                            <ion-select-option value=12>Décembre</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
-<div *ngIf="selecteTextId === 'text2'">
-    <ion-row>
-        <ion-col>
-            <ion-card class="text-center classSelect">
-            <ion-item no-lines class="genre">
-              <ion-label style="color:black;">Choisissez la période</ion-label>
-              <ion-select  [(ngModel)]="loadData1.mois1" required="" name="mois1" type="number" (ionChange)="change2($event)">
-                <ion-select-option  value=1>Janvier</ion-select-option>
-                <ion-select-option  value=2>Février</ion-select-option>
-                <ion-select-option  value=3>Mars</ion-select-option>
-                <ion-select-option value=4>Avril</ion-select-option>
-                <ion-select-option value=5>Mai</ion-select-option>
-                <ion-select-option value=6>Juin</ion-select-option>
-                <ion-select-option value=7>Juillet</ion-select-option>
-                <ion-select-option value=8>Août</ion-select-option>
-                <ion-select-option value=9>Septembre</ion-select-option>
-                <ion-select-option value=10>Octobre</ion-select-option>
-                <ion-select-option value=11>Novembre</ion-select-option>
-                <ion-select-option value=12>Décembre</ion-select-option>
-              </ion-select>
-            </ion-item>
-        </ion-card>
-        </ion-col>
-    </ion-row>
+        <table class="table table-striped table-bordered"
+               style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data">
+            <thead>
+            <tr>
+                <th>Société transit</th>
+                <th>Période</th>
+                <th>Valeurs(CFA)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of data" style="font-size: 12px;">
+                <td style="text-align: right;" *ngIf="d.nom!=null">{{d.nom}}</td>
+                <td style="text-align: right;" *ngIf="d.nom==null">N/A</td>
+                <td style="text-align: right;">{{mois[d.mois - 1]}}</td>
+                <td style="text-align: right; font-size: 11.5px; font-weight: bold;">{{numStr(d.total, ' ')}}</td>
 
-       <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data2">
-        <thead>
-          <tr>
-            <!-- <th>Période</th> -->
-            <th>Pays Origine</th>
-            <th>Nombre d'importations</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of data2" style="text-align: right;">
-            <!-- <td>{{mois[d.periode-1]}}</td> -->
-            <td>{{d.pays}}</td>
-            <td>{{d.count}}</td>
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="selecteTextId === 'text2'">
+        <ion-row>
+            <ion-col>
+                <ion-card class="text-center classSelect">
+                    <ion-item no-lines class="genre">
+                        <ion-label style="color:black;">Choisissez la période</ion-label>
+                        <ion-select [(ngModel)]="loadData1.mois1" required="" name="mois1" type="number"
+                                    (ionChange)="change2($event)">
+                            <ion-select-option value=1>Janvier</ion-select-option>
+                            <ion-select-option value=2>Février</ion-select-option>
+                            <ion-select-option value=3>Mars</ion-select-option>
+                            <ion-select-option value=4>Avril</ion-select-option>
+                            <ion-select-option value=5>Mai</ion-select-option>
+                            <ion-select-option value=6>Juin</ion-select-option>
+                            <ion-select-option value=7>Juillet</ion-select-option>
+                            <ion-select-option value=8>Août</ion-select-option>
+                            <ion-select-option value=9>Septembre</ion-select-option>
+                            <ion-select-option value=10>Octobre</ion-select-option>
+                            <ion-select-option value=11>Novembre</ion-select-option>
+                            <ion-select-option value=12>Décembre</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <table class="table table-striped table-bordered"
+               style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data2">
+            <thead>
+            <tr>
+                <!-- <th>Période</th> -->
+                <th>Pays Origine</th>
+                <th>Nombre d'importations</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of data2" style="text-align: right;">
+                <!-- <td>{{mois[d.periode-1]}}</td> -->
+                <td>{{d.pays}}</td>
+                <td>{{d.count}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 
-<div *ngIf="selecteTextId === 'text3'">
-    <ion-row>
-        <ion-col>
-            <ion-card class="text-center classSelect">
-            <ion-item no-lines class="genre">
-              <ion-label style="color:black;">Choisissez la période</ion-label>
-              <ion-select  [(ngModel)]="loadData2.mois1" required="" name="mois1" type="number" (ionChange)="change3($event)">
-                <ion-select-option  value=1>Janvier</ion-select-option>
-                <ion-select-option  value=2>Février</ion-select-option>
-                <ion-select-option  value=3>Mars</ion-select-option>
-                <ion-select-option value=4>Avril</ion-select-option>
-                <ion-select-option value=5>Mai</ion-select-option>
-                <ion-select-option value=6>Juin</ion-select-option>
-                <ion-select-option value=7>Juillet</ion-select-option>
-                <ion-select-option value=8>Août</ion-select-option>
-                <ion-select-option value=9>Septembre</ion-select-option>
-                <ion-select-option value=10>Octobre</ion-select-option>
-                <ion-select-option value=11>Novembre</ion-select-option>
-                <ion-select-option value=12>Décembre</ion-select-option>
-              </ion-select>
-            </ion-item>
-            </ion-card>
-        </ion-col>
-    </ion-row>
+    <div *ngIf="selecteTextId === 'text3'">
+        <ion-row>
+            <ion-col>
+                <ion-card class="text-center classSelect">
+                    <ion-item no-lines class="genre">
+                        <ion-label style="color:black;">Choisissez la période</ion-label>
+                        <ion-select [(ngModel)]="loadData2.mois1" required="" name="mois1" type="number"
+                                    (ionChange)="change3($event)">
+                            <ion-select-option value=1>Janvier</ion-select-option>
+                            <ion-select-option value=2>Février</ion-select-option>
+                            <ion-select-option value=3>Mars</ion-select-option>
+                            <ion-select-option value=4>Avril</ion-select-option>
+                            <ion-select-option value=5>Mai</ion-select-option>
+                            <ion-select-option value=6>Juin</ion-select-option>
+                            <ion-select-option value=7>Juillet</ion-select-option>
+                            <ion-select-option value=8>Août</ion-select-option>
+                            <ion-select-option value=9>Septembre</ion-select-option>
+                            <ion-select-option value=10>Octobre</ion-select-option>
+                            <ion-select-option value=11>Novembre</ion-select-option>
+                            <ion-select-option value=12>Décembre</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
-       <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data3">
-        <thead>
-          <tr>
-            <!-- <th>Période</th> -->
-            <th>Importateurs</th>
-            <th>Valeurs(CFA)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of data3" style="text-align: center; font-size: 12px;">
-            <!-- <td>{{mois[d.periode-1]}}</td> -->
-            <td>{{d.nom}}</td>
-            <td style="font-size: 11.5px; font-weight: bold;">{{numStr(d.total,' ')}}</td>
-          </tr>
-        </tbody>
-      </table>
-</div>
-
+        <table class="table table-striped table-bordered"
+               style="margin-left: auto; margin-right: auto; margin-top: 20px;" *ngIf="data3">
+            <thead>
+            <tr>
+                <!-- <th>Période</th> -->
+                <th>Importateurs</th>
+                <th>Valeurs(CFA)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of data3" style="text-align: center; font-size: 12px;">
+                <!-- <td>{{mois[d.periode-1]}}</td> -->
+                <td>{{d.nom}}</td>
+                <td style="font-size: 11.5px; font-weight: bold;">{{numStr(d.total, ' ')}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 
 </ion-content>
