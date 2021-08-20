@@ -1,42 +1,94 @@
+<!--<ion-content>-->
+<!--    <div class="container">-->
+<!--        <div class="forms-container">-->
+<!--            <div class="signin-signup">-->
+<!--                <form [formGroup]="userForm" (ngSubmit)="login1()">-->
+<!--                    <ion-item class="ion-margin-bottom">-->
+<!--                        <ion-icon slot="end" name="person"></ion-icon>-->
+<!--                        <ion-input type="text" formControlName="login" required="" name=""-->
+<!--                                   placeholder="login"></ion-input>-->
+<!--                    </ion-item>-->
+<!--                    <br>-->
+<!--                    <ion-item class="ion-margin-bottom">-->
+<!--                        <ion-icon slot="end" name="key"></ion-icon>-->
+<!--                        <ion-input type="password" formControlName="password" required="" placeholder="mot de passe"-->
+<!--                                   required="" name=""></ion-input>-->
+<!--                    </ion-item>-->
+<!--                    <p></p>-->
+<!--                    <br>-->
+<!--                    <ion-button expand="block" type="submit" shape="round">Connexion</ion-button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="panels-container">-->
+<!--            <div class="panel left-panel">-->
+<!--                <div class="content">-->
+<!--                    <img src="assets/images/logodipa.jpg" class="rounded-circle im" width="100" height="100">-->
+<!--                    <h1>Orbus DIPA</h1>-->
+<!--                    <h3>-->
+<!--                        indicateur de performance-->
+<!--                    </h3>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="panel right-panel">-->
+<!--                <div class="content">-->
+<!--                    <button class="btn transparent" id="sign-in-btn">-->
+<!--                        Sign in-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</ion-content>-->
+
+
+
+
 <ion-content>
-    <div class="container">
+    <div class="classDiv1">
+
+    </div>
+    <div class="classDiv2">
+
+    </div>
+
+    <div class="classDiv3">
+
+    </div>
+
+
+    <div class="classDiv4">
+        <br>
+        <br>
         <div class="forms-container">
-            <div class="signin-signup">
-                <form [formGroup]="userForm" (ngSubmit)="login1()">
-                    <ion-item class="ion-margin-bottom">
-                        <ion-icon slot="end" name="person"></ion-icon>
-                        <ion-input type="text" formControlName="login" required="" name=""
-                                   placeholder="login"></ion-input>
-                    </ion-item>
-                    <br>
-                    <ion-item class="ion-margin-bottom">
-                        <ion-icon slot="end" name="key"></ion-icon>
-                        <ion-input type="password" formControlName="password" required="" placeholder="mot de passe"
-                                   required="" name=""></ion-input>
-                    </ion-item>
-                    <p></p>
-                    <br>
-                    <ion-button expand="block" type="submit" shape="round">Connexion</ion-button>
-                </form>
-            </div>
-        </div>
-        <div class="panels-container">
-            <div class="panel left-panel">
-                <div class="content">
-                    <img src="assets/images/logodipa.jpg" class="rounded-circle im" width="100" height="100">
-                    <h1>Orbus DIPA</h1>
-                    <h3>
-                        indicateur de performance
-                    </h3>
-                </div>
-            </div>
-            <div class="panel right-panel">
-                <div class="content">
-                    <button class="btn transparent" id="sign-in-btn">
-                        Sign in
-                    </button>
-                </div>
-            </div>
+            <form [formGroup]="userForm" (ngSubmit)="login1()">
+                <ion-item class="ion-margin-bottom">
+                    <ion-icon slot="end" name="person"></ion-icon>
+                    <ion-input type="text" formControlName="login" required="" name=""
+                               placeholder="login"></ion-input>
+                </ion-item>
+
+                <ion-item class="ion-margin-bottom">
+                    <ion-icon slot="end" name="key"></ion-icon>
+                    <ion-input type="password" formControlName="password" required="" placeholder="mot de passe"
+                               required="" name=""></ion-input>
+                </ion-item>
+
+                <!--                <ion-button expand="block" type="submit" shape="round">Connexion</ion-button>-->
+                <ion-button style="width: 310px" expand="block" type="submit" shape="round">Connexion</ion-button>
+            </form>
+
+            <br>
+            <ion-row style="margin-left: 50px; margin-right: 30px">
+                <ion-col>
+                    <span>Mot de passe oublié.</span>
+                </ion-col>
+                <ion-col>
+                    <span>Créer un compte.</span>
+                </ion-col>
+            </ion-row>
         </div>
     </div>
+
+
 </ion-content>
