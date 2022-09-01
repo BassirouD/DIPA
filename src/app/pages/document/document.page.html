@@ -56,7 +56,7 @@
                     <ion-item no-lines class="genre">
                         <ion-label style="color:black;">Choisissez la période</ion-label>
                         <ion-select [(ngModel)]="loadData.mois1" required="" name="mois1" type="number"
-                                    (ionChange)="change1($event)">
+                                    (ionChange)="change1($event)" interface="popover" mode="ios">
                             <ion-select-option value=1>Janvier</ion-select-option>
                             <ion-select-option value=2>Février</ion-select-option>
                             <ion-select-option value=3>Mars</ion-select-option>

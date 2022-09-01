@@ -51,7 +51,6 @@ export class PerformanceCompareePage implements OnInit {
         } else {
             this.drawing2()
         }
-
     }
 
     parametrervolume() {
@@ -184,8 +183,8 @@ export class PerformanceCompareePage implements OnInit {
                     }
                 }
 
-                console.log(this.chartData);
-                console.log(this.chartData1)
+                console.log('chartData', this.chartData);
+                console.log('chartData1', this.chartData1)
 
                 this.chartOptions = new Chart({
                     chart: {
@@ -236,7 +235,6 @@ export class PerformanceCompareePage implements OnInit {
                     //console.log("comparaison "+this.data[i].annee===thithis.loadData.annee1);
                     if (this.data[i].annee === parseInt(this.loadData.annee1)) {
                         this.chartData1.push(this.data[i].total)
-
                     }
                     if (this.data[i].annee === parseInt(this.loadData.annee2)) {
                         this.chartData.push(this.data[i].total)
@@ -244,7 +242,7 @@ export class PerformanceCompareePage implements OnInit {
                 }
 
                 console.log(this.chartData);
-                console.log(this.chartData1)
+                console.log(this.chartData1);
 
                 this.chartOptions = new Chart({
                     chart: {

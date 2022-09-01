@@ -17,13 +17,25 @@ export class HomePage implements OnInit {
     prenom: any;
     email: any;
     telepohne: any;
+    toDay;
+    mouth;
 
     constructor(private authS: AuthService, private router: Router, public actionSheetController: ActionSheetController) {
+
     }
 
     ngOnInit(): void {
         //console.log(this.login)
         this.chechUser();
+        this.getInit();
+    }
+
+    getInit(){
+        let date = new Date();
+        this.mouth=date.getMonth() + 1;
+        this.toDay = Date().substr(11, 4);
+        localStorage.setItem('annee', this.toDay);
+        localStorage.setItem('periode', this.mouth);
     }
 
     check() {
@@ -82,11 +94,11 @@ export class HomePage implements OnInit {
                     }
                 },
                 {
-                text: 'Juin',
-                handler: () => {
-                    console.log('Share clicked');
+                    text: 'Juin',
+                    handler: () => {
+                        console.log('Share clicked');
+                    },
                 },
-            },
                 {
                     text: 'Juillet',
                     handler: () => {
@@ -102,12 +114,12 @@ export class HomePage implements OnInit {
                     handler: () => {
                         console.log('Share clicked');
                     }
-                },{
+                }, {
                     text: 'Octombre',
                     handler: () => {
                         console.log('Share clicked');
                     }
-                },{
+                }, {
                     text: 'Novembre',
                     handler: () => {
                         console.log('Share clicked');
@@ -121,14 +133,12 @@ export class HomePage implements OnInit {
         });
         await actionSheet.present();
 
-        const { role } = await actionSheet.onDidDismiss();
+        const {role} = await actionSheet.onDidDismiss();
         console.log('onDidDismiss resolved with role', role);
     }
 
 
-
-
-checkannee(event) {
+    checkannee(event) {
         let annee = event.target.value;
         localStorage.setItem('annee', annee);
     }

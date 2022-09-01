@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api:"http://orbuspoles.orbus.sn/apidipa/"
+  // api:"http://orbuspoles.orbus.sn/apidipa/"
+   api:"https://orbuspoles.orbus.sn/apidipa/"
 };
 
 /*

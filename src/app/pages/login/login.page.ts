@@ -15,6 +15,8 @@ export class LoginPage implements OnInit {
     user: any;
     userForm: FormGroup;
     user1: any;
+    toDay;
+    mouth;
 
     constructor(public loadingController: LoadingController,
                 public router: Router,
@@ -29,6 +31,14 @@ export class LoginPage implements OnInit {
             login: ['', Validators.required],
             password: ['', Validators.required]
         });
+    }
+
+    getInit(){
+        let date = new Date();
+        this.mouth=date.getMonth() + 1;
+        this.toDay = Date().substr(11, 4);
+        localStorage.setItem('annee', this.toDay);
+        localStorage.setItem('periode', this.mouth);
     }
 
 
@@ -52,6 +62,7 @@ export class LoginPage implements OnInit {
                     localStorage.setItem('loggedIn', 'true');
                     localStorage.setItem('login', this.user.login)
                     localStorage.setItem('id', this.user.ID);
+                    this.getInit();
                     // this.presentAlert("Connexion réussie !!");
                     console.log('default ' + this.user.DEFAULTPWD)
                     if (this.user.DEFAULTPWD === '0') {
